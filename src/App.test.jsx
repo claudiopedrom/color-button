@@ -21,3 +21,19 @@ test("button click flow", () => {
   // expect the button text to match /red/i
   expect(buttonElement).toHaveTextContent(/red/i);
 });
+
+test("checkbox flow", () => {
+  render(<App />);
+
+  // find elements
+  const buttonElement = screen.getByRole("button", {
+    name: /blue/i,
+  });
+  const checkboxElement = screen.getByRole("checkbox", {
+    name: /disable button/i,
+  });
+
+  // check initial conditions
+  expect(buttonElement).toBeEnabled();
+  expect(checkboxElement).not.toBeChecked();
+})
