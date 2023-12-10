@@ -4,16 +4,17 @@ import { useState } from "react";
 function App() {
   const [disabled, setDisabled] = useState(false);
   const [buttonColor, setButtonColor] = useState("red");
-  const newButtonColor = buttonColor === "red" ? "blue" : "red";
+  const nextColor = buttonColor === "red" ? "blue" : "red";
+  const className = disabled ? "gray" : buttonColor;
 
   return (
     <div>
       <button
-        className={buttonColor}
-        onClick={() => setButtonColor(newButtonColor)}
+        className={className}
+        onClick={() => setButtonColor(nextColor)}
         disabled={disabled}
       >
-        Change to {newButtonColor}
+        Change to {nextColor}
       </button>
       <br />
       <input type="checkbox" id="disable-button-checkbox" defaultChecked={false} onChange={(e) => setDisabled(e.target.checked)} />
