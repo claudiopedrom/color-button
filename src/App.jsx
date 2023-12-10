@@ -1,23 +1,31 @@
 import "./App.css";
 import { useState } from "react";
+import { kebabCaseToTitleCase } from "./helpers";
 
 function App() {
   const [disabled, setDisabled] = useState(false);
-  const [buttonColor, setButtonColor] = useState("red");
-  const nextColor = buttonColor === "red" ? "blue" : "red";
+  const [buttonColor, setButtonColor] = useState("medium-violet-red");
+  const nextColorClass =
+    buttonColor === "medium-violet-red" ? "midnight-blue" : "medium-violet-red";
+  const nextColorTitleCase = kebabCaseToTitleCase(nextColorClass);
   const className = disabled ? "gray" : buttonColor;
 
   return (
     <div>
       <button
         className={className}
-        onClick={() => setButtonColor(nextColor)}
         disabled={disabled}
+        onClick={() => setButtonColor(nextColorClass)}
       >
-        Change to {nextColor}
+        Change to {nextColorTitleCase}
       </button>
       <br />
-      <input type="checkbox" id="disable-button-checkbox" defaultChecked={false} onChange={(e) => setDisabled(e.target.checked)} />
+      <input
+        type="checkbox"
+        id="disable-button-checkbox"
+        defaultChecked={disabled}
+        onChange={(e) => setDisabled(e.target.checked)}
+      />
       <label htmlFor="disable-button-checkbox">Disable button</label>
     </div>
   );

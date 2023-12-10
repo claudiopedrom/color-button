@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
-import { expect } from "vitest";
+import { kebabCaseToTitleCase } from "./helpers";
 
 test("button click flow", () => {
   render(<App />);
@@ -11,19 +11,20 @@ test("button click flow", () => {
   });
 
   // expect the class to be red
-  expect(buttonElement).toHaveClass("red");
+  expect(buttonElement).toHaveClass("medium-violet-red");
 
   // click button
   fireEvent.click(buttonElement);
 
   // expect the class to be blue
-  expect(buttonElement).toHaveClass("blue");
+  expect(buttonElement).toHaveClass("midnight-blue");
 
   // expect the button text to match /red/i
   expect(buttonElement).toHaveTextContent(/red/i);
 });
 
 test("checkbox flow", () => {
+  // render app
   render(<App />);
 
   // find elements
@@ -43,12 +44,11 @@ test("checkbox flow", () => {
   expect(buttonElement).toBeDisabled();
   expect(buttonElement).toHaveClass("gray");
 
-  // click checkbox again to re-enable button
+  // click checkbox to re-enable button
   fireEvent.click(checkboxElement);
   expect(buttonElement).toBeEnabled();
-  expect(buttonElement).toHaveClass("red");
-})
-
+  expect(buttonElement).toHaveClass("medium-violet-red");
+});
 
 test("checkbox flow after button click", () => {
   // render app
@@ -73,5 +73,17 @@ test("checkbox flow after button click", () => {
   // click checkbox to re-enable button
   fireEvent.click(checkboxElement);
   expect(buttonElement).toBeEnabled();
-  expect(buttonElement).toHaveClass("blue");
+  expect(buttonElement).toHaveClass("midnight-blue");
+});
+
+describe("kebabCaseToTitleCase", () => {
+  test("Works for no hypens", () => {
+    expect(kebabCaseToTitleCase("red")).toBe("Red");
+  });
+  test("Works for one hyphen", () => {
+    expect(kebabCaseToTitleCase("midnight-blue")).toBe("Midnight Blue");
+  });
+  test("Works for multiple inner hyphens", () => {
+    expect(kebabCaseToTitleCase("medium-violet-red")).toBe("Medium Violet Red");
+  });
 });
